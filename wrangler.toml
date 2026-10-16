@@ -1,0 +1,12 @@
+name = "grand-air-final"
+main = "worker/index.js"
+compatibility_date = "2026-10-16"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "grand-air-db"
+database_id = "REPLACE_WITH_YOUR_REAL_D1_DATABASE_ID"
+
+[vars]
+# Set this to the exact website origin only if a separate frontend calls the Worker.
+# ALLOWED_ORIGIN = "https://your-real-site.example"
