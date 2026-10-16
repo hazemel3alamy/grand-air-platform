@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GRAND AIR | لوحة الإدارة</title>
+<style>
+:root{--red:#d62828;--blue:#1769aa;--ink:#17212b;--muted:#617181;--bg:#f4f7fa;--line:#dce3e9;--white:#fff}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+header{background:linear-gradient(120deg,#0d2538,#1769aa);color:white;padding:22px 16px}
+.wrap{max-width:1100px;margin:auto;padding:16px}h1{margin:0;font-size:24px}header p{margin:7px 0 0;color:#dceaf4}
+.card{background:var(--white);border:1px solid var(--line);border-radius:15px;padding:16px;margin:14px 0;box-shadow:0 4px 18px #142b3b0a}
+h2{font-size:19px;margin:0 0 12px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+label{display:block;font-size:13px;color:var(--muted);margin-bottom:5px}input,textarea,select{width:100%;padding:11px;border:1px solid #cbd5df;border-radius:9px;font:inherit;background:white;color:var(--ink)}
+textarea{min-height:82px;resize:vertical}.wide{grid-column:1/-1}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+button{border:0;border-radius:9px;padding:11px 14px;font:inherit;font-weight:700;cursor:pointer;background:var(--blue);color:white}
+button.secondary{background:#e7eef4;color:#20364a}button.danger{background:#b42318}button:disabled{opacity:.55;cursor:wait}
+.hidden{display:none!important}.msg{padding:10px;border-radius:9px;margin-top:10px;white-space:pre-wrap}.ok{background:#e6f7ed;color:#17653a}.err{background:#fff0ef;color:#9b1c13}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between}.toolbar input{max-width:340px}
+.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.product{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:white}.product img{width:100%;height:155px;object-fit:contain;background:#f6f8fa}.product .body{padding:12px}.product h3{margin:0 0 5px;font-size:16px}.muted{color:var(--muted);font-size:13px}.price{font-size:18px;font-weight:800;color:var(--red);margin:8px 0}.pill{display:inline-block;border-radius:30px;background:#e7eef4;padding:4px 8px;font-size:12px}.pill.off{background:#fff0ef;color:#9b1c13}
+@media(max-width:620px){.grid{grid-template-columns:1fr}.wrap{padding:10px}header{padding:18px 12px}.card{padding:12px}.toolbar{align-items:stretch}.toolbar input{max-width:none}}
+</style>
+</head>
+<body>
+<header><div class="wrap"><h1>GRAND AIR — لوحة التحكم</h1><p>إدارة التكييفات والمنتجات والأسعار والمخزون والطلبات</p></div></header>
+<main class="wrap">
+<section id="loginCard" class="card">
+<h2>تسجيل دخول المدير</h2>
+<div class="grid">
+<div><label for="apiBase">رابط Worker API</label><input id="apiBase" placeholder="https://your-worker.your-subdomain.workers.dev"></div>
+<div><label for="username">اسم المستخدم</label><input id="username" value="admin" autocomplete="username"></div>
+<div class="wide"><label for="password">كلمة المرور</label><input id="password" type="password" autocomplete="current-password"></div>
+</div>
+<div class="actions"><button id="loginBtn">دخول لوحة الإدارة</button></div>
+<div id="loginMsg" aria-live="polite"></div>
+<p class="muted">لا تحفظ كلمة المرور في المتصفح. رابط الـ API يجب أن يكون رابط Worker المنشور فعليًا.</p>
+</section>
+
+<section id="dashboard" class="hidden">
+<div class="card">
+<div class="toolbar"><h2>إدارة التكييفات</h2><div class="actions" style="margin:0"><button id="newBtn">+ إضافة تكييف</button><button id="refreshBtn" class="secondary">تحديث القائمة</button><button id="logoutBtn" class="secondary">تسجيل خروج</button></div></div>
+<div id="dashMsg" aria-live="polite"></div>
+</div>
+<section id="editor" class="card hidden">
+<h2 id="editorTitle">إضافة تكييف جديد</h2>
+<form id="productForm">
+<input type="hidden" id="productId">
+<div class="grid">
+<div><label for="pName">اسم التكييف *</label><input id="pName" required maxlength="160" placeholder="مثال: تكييف 1.5 حصان بارد"></div>
+<div><label for="pBrand">الماركة</label><input id="pBrand" maxlength="100" placeholder="Carrier / Midea / LG"></div>
+<div><label for="pCategory">التصنيف</label><input id="pCategory" maxlength="100" placeholder="بارد فقط / بارد ساخن"></div>
+<div><label for="pPrice">السعر بالجنيه المصري *</label><input id="pPrice" required type="number" min="0" step="0.01"></div>
+<div><label for="pStock">المخزون *</label><input id="pStock" required type="number" min="0" step="1" value="0"></div>
+<div><label for="pImage">رابط صورة HTTPS</label><input id="pImage" type="url" placeholder="https://..."></div>
+<div class="wide"><label for="pDescription">المواصفات والوصف</label><textarea id="pDescription" maxlength="4000"></textarea></div>
+<div><label for="pActive">حالة العرض</label><select id="pActive"><option value="1">ظاهر في المتجر</option><option value="0">مخفي من المتجر</option></select></div>
+</div>
+<div class="actions"><button type="submit" id="saveBtn">حفظ المنتج</button><button type="button" class="secondary" id="cancelBtn">إلغاء</button></div>
+<div id="formMsg" aria-live="polite"></div>
+</form>
+</section>
+<div class="card"><div class="toolbar"><h2>المنتجات المسجلة</h2><input id="search" placeholder="ابحث بالاسم أو الماركة..." aria-label="بحث المنتجات"></div><div id="products" class="products" style="margin-top:14px"></div></div>
+<div class="card"><div class="toolbar"><h2>آخر الطلبات</h2><button id="ordersBtn" class="secondary">عرض الطلبات</button></div><div id="orders" class="muted">اضغط «عرض الطلبات» لتحميل الطلبات.</div></div>
+</section>
+</main>
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  let api = "";
+  let authToken = "";
+  let products = [];
+  const message = (id, text, type = "ok") => {
+    const el = $(id); el.className = "msg " + type; el.textContent = text;
+  };
+  const clearMessage = (id) => { $(id).className = ""; $(id).textContent = ""; };
+  const request = async (path, options = {}) => {
+    const headers = { "content-type": "application/json", ...(options.headers || {}) };
+    if (authToken) headers.authorization = "Bearer " + authToken;
+    const response = await fetch(api + path, { ...options, headers });
+    let data;
+    try { data = await response.json(); } catch { throw new Error("الخادم رجع استجابة غير مفهومة"); }
+    if (!response.ok || data.ok === false) {
+      if (response.status === 401 && path !== "/api/admin/login") {
+        authToken = ""; $("dashboard").classList.add("hidden"); $("loginCard").classList.remove("hidden");
+      }
+      throw new Error(data.error || ("HTTP " + response.status));
+    }
+    return data;
+  };
+  const esc = (v) => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+  const fmt = (n) => new Intl.NumberFormat("ar-EG", {style:"currency",currency:"EGP",maximumFractionDigits:2}).format(Number(n || 0));
+  async function login() {
+    clearMessage("loginMsg");
+    api = $("apiBase").value.trim().replace(/\/+$/, "");
+    if (!/^https:\/\/[^/]+$/i.test(api)) return message("loginMsg","أدخل رابط Worker صحيح يبدأ بـ https://","err");
+    $("loginBtn").disabled = true;
+    try {
+      const data = await request("/api/admin/login", { method:"POST", body:JSON.stringify({username:$("username").value.trim(),password:$("password").value}) });
+      authToken = data.token;
+      $("password").value = "";
+      $("loginCard").classList.add("hidden"); $("dashboard").classList.remove("hidden");
+      message("dashMsg","تم تسجيل الدخول. حمّل المنتجات وتأكد من حفظ كل تعديل.");
+      await loadProducts();
+    } catch(e) { message("loginMsg",e.message,"err"); }
+    finally { $("loginBtn").disabled = false; }
+  }
+  function openEditor(p = null) {
+    $("productForm").reset(); $("productId").value = p?.id || "";
+    $("editorTitle").textContent = p ? "تعديل بيانات التكييف" : "إضافة تكييف جديد";
+    $("pName").value = p?.name || ""; $("pBrand").value = p?.brand || "";
+    $("pCategory").value = p?.category || ""; $("pPrice").value = p?.price ?? "";
+    $("pStock").value = p?.stock ?? 0; $("pImage").value = p?.image_url || "";
+    $("pDescription").value = p?.description || ""; $("pActive").value = String(p?.active ?? 1);
+    clearMessage("formMsg"); $("editor").classList.remove("hidden"); $("editor").scrollIntoView({behavior:"smooth",block:"start"});
+  }
+  async function loadProducts() {
+    clearMessage("dashMsg");
+    try {
+      const data = await request("/api/admin/products");
+      products = data.products || []; renderProducts();
+      message("dashMsg","تم تحميل "+products.length+" منتج من قاعدة البيانات.");
+    } catch(e) { message("dashMsg",e.message,"err"); }
+  }
+  function renderProducts() {
+    const query = $("search").value.trim().toLowerCase();
+    const list = products.filter(p => (p.name+" "+p.brand+" "+p.category).toLowerCase().includes(query));
+    $("products").innerHTML = list.length ? list.map(p => `
+      <article class="product">
+        <img src="${esc(p.image_url || "")}" alt="${esc(p.name)}" loading="lazy" onerror="this.style.display='none'">
+        <div class="body">
+          <h3>${esc(p.name)}</h3><div class="muted">${esc(p.brand || "بدون ماركة")} · ${esc(p.category || "بدون تصنيف")}</div>
+          <div class="price">${fmt(p.price)}</div>
+          <div class="muted">المخزون: ${Number(p.stock)} قطعة</div>
+          <p><span class="pill ${p.active ? "" : "off"}">${p.active ? "ظاهر في المتجر" : "مخفي"}</span></p>
+          <div class="actions"><button data-edit="${Number(p.id)}">تعديل</button>
+          ${p.active ? `<button class="danger" data-hide="${Number(p.id)}">إخفاء</button>` : `<button data-show="${Number(p.id)}">إظهار</button>`}</div>
+        </div>
+      </article>`).join("") : '<p class="muted">لا توجد منتجات مطابقة.</p>';
+    $("products").querySelectorAll("[data-edit]").forEach(b => b.onclick = () => openEditor(products.find(p => p.id === Number(b.dataset.edit))));
+    $("products").querySelectorAll("[data-hide]").forEach(b => b.onclick = () => setVisibility(Number(b.dataset.hide), false));
+    $("products").querySelectorAll("[data-show]").forEach(b => b.onclick = () => setVisibility(Number(b.dataset.show), true));
+  }
+  async function saveProduct(event) {
+    event.preventDefault(); clearMessage("formMsg");
+    const id = $("productId").value;
+    const body = {
+      name:$("pName").value.trim(), brand:$("pBrand").value.trim(), category:$("pCategory").value.trim(),
+      price:Number($("pPrice").value), stock:Number($("pStock").value), image_url:$("pImage").value.trim(),
+      description:$("pDescription").value.trim(), active:$("pActive").value === "1"
+    };
+    if (!body.name || !Number.isFinite(body.price) || body.price < 0 || !Number.isSafeInteger(body.stock) || body.stock < 0) {
+      return message("formMsg","راجع الاسم والسعر والمخزون؛ المخزون لازم يكون عددًا صحيحًا غير سالب.","err");
+    }
+    $("saveBtn").disabled = true;
+    try {
+      await request(id ? "/api/admin/products/"+id : "/api/admin/products", {method:id?"PATCH":"POST",body:JSON.stringify(body)});
+      message("formMsg", id ? "تم حفظ تعديلات المنتج." : "تمت إضافة المنتج بنجاح.");
+      await loadProducts();
+      setTimeout(() => $("editor").classList.add("hidden"), 450);
+    } catch(e) { message("formMsg","لم يتم الحفظ: "+e.message,"err"); }
+    finally { $("saveBtn").disabled = false; }
+  }
+  async function setVisibility(id, visible) {
+    const p = products.find(x => x.id === id); if (!p) return;
+    try {
+      await request("/api/admin/products/"+id, {method:"PATCH",body:JSON.stringify({...p,active:visible})});
+      await loadProducts();
+    } catch(e) { message("dashMsg",e.message,"err"); }
+  }
+  async function loadOrders() {
+    $("orders").textContent = "جاري تحميل الطلبات...";
+    try {
+      const data = await request("/api/admin/orders");
+      if (!data.orders.length) { $("orders").textContent = "لا توجد طلبات حتى الآن."; return; }
+      $("orders").innerHTML = `<div style="overflow:auto"><table style="border-collapse:collapse;width:100%;min-width:680px"><thead><tr><th>رقم الطلب</th><th>العميل</th><th>الهاتف</th><th>الإجمالي</th><th>الحالة</th><th>تحديث الحالة</th></tr></thead><tbody>${
+        data.orders.map(o=>`<tr><td>${esc(o.order_number)}</td><td>${esc(o.customer_name)}</td><td>${esc(o.phone)}</td><td>${fmt(o.total)}</td><td>${esc(o.status)}</td><td><select data-order="${Number(o.id)}"><option value="new">جديد</option><option value="confirmed">مؤكد</option><option value="preparing">قيد التجهيز</option><option value="shipped">تم الشحن</option><option value="completed">مكتمل</option><option value="cancelled">ملغي</option></select><button data-status="${Number(o.id)}">حفظ</button></td></tr>`).join("")
+      }</tbody></table></div>`;
+      data.orders.forEach(o => {const s=$("orders").querySelector(`[data-order="${o.id}"]`); if(s) s.value=o.status;});
+      $("orders").querySelectorAll("[data-status]").forEach(b => b.onclick = async () => {
+        const id=Number(b.dataset.status), select=$("orders").querySelector(`[data-order="${id}"]`);
+        b.disabled=true;
+        try { await request("/api/admin/orders/"+id,{method:"PATCH",body:JSON.stringify({status:select.value})}); await loadOrders(); }
+        catch(e){$("orders").textContent="تعذر تحديث الطلب: "+e.message;}
+        finally{b.disabled=false;}
+      });
+    } catch(e) { $("orders").textContent="تعذر تحميل الطلبات: "+e.message; }
+  }
+  $("loginBtn").addEventListener("click",login);
+  $("password").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
+  $("newBtn").addEventListener("click",()=>openEditor());
+  $("refreshBtn").addEventListener("click",loadProducts);
+  $("cancelBtn").addEventListener("click",()=>$("editor").classList.add("hidden"));
+  $("productForm").addEventListener("submit",saveProduct);
+  $("search").addEventListener("input",renderProducts);
+  $("ordersBtn").addEventListener("click",loadOrders);
+  $("logoutBtn").addEventListener("click",async()=>{
+    try{await request("/api/admin/logout",{method:"POST",body:"{}"});}catch{}
+    authToken="";products=[];$("dashboard").classList.add("hidden");$("loginCard").classList.remove("hidden");$("orders").textContent="اضغط «عرض الطلبات» لتحميل الطلبات.";
+  });
+})();
+</script>
+</body>
+</html>
