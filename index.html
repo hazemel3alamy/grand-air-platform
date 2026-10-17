@@ -1,16 +1,105 @@
+
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#103b70"><meta name="description" content="Grand Air — بيع وتركيب وصيانة التكييفات"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icons/icon-192.png"><link rel="apple-touch-icon" href="icons/icon-192.png"><link rel="stylesheet" href="style.css"><title>Grand Air | تكييفات وصيانة</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#103b70">
+  <meta name="description" content="Grand Air — بيع وتركيب وصيانة التكييفات">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
+  <link rel="apple-touch-icon" href="./icon-192.png">
+  <link rel="stylesheet" href="./style.css">
+  <title>Grand Air | تكييفات وصيانة</title>
 </head>
 <body>
-<header class="top"><a class="brand" href="#home"><span class="mark">GA</span><span><b>GRAND AIR</b><small>راحة الجو تبدأ من هنا</small></span></a><button id="installBtn" class="install" hidden>تثبيت التطبيق</button></header>
-<main id="home">
-<section class="hero"><div class="hero-copy"><span class="eyebrow">تكييف • تركيب • صيانة</span><h1>خلّي الجو <em>مظبوط</em></h1><p>اختار التكييف المناسب ليك، واطلب التركيب أو الصيانة بسهولة من موبايلك.</p><div class="actions"><a class="btn primary" href="#products">تصفح المنتجات</a><a class="btn light" href="#service">اطلب صيانة</a></div></div><div class="hero-art" aria-hidden="true"><div class="sun"></div><div class="ac"><div class="ac-line"></div><div class="vents">≋ ≋ ≋ ≋ ≋</div></div><i class="wind w1"></i><i class="wind w2"></i><i class="wind w3"></i></div></section>
-<section class="trust"><div><b>01</b><span>اختيار سهل</span></div><div><b>02</b><span>طلب سريع</span></div><div><b>03</b><span>خدمة موثوقة</span></div></section>
-<section class="section" id="products"><div class="section-head"><div><span class="eyebrow">كتالوج جراند إير</span><h2>التكييفات المتاحة</h2></div><button id="reload" class="text-btn">تحديث المنتجات ↻</button></div><p id="productNotice" class="notice">يمكنك تصفح المنتجات وطلب السعر أو الشراء عبر واتساب.</p><div id="productsGrid" class="products"><article class="empty"><div class="empty-icon">❄</div><b>جاري تحميل المنتجات</b><p>لحظات من فضلك…</p></article></div></section>
-<section class="service" id="service"><div><span class="eyebrow">إحنا معاك</span><h2>محتاج تركيب أو صيانة؟</h2><p>املأ البيانات وسيتم تجهيز طلبك للتواصل مع فريق Grand Air.</p><ul><li>تركيب تكييفات</li><li>صيانة وفحص</li><li>استشارات واختيار قدرة مناسبة</li></ul></div><form id="serviceForm"><label>الاسم<input name="name" required maxlength="100" placeholder="اسم حضرتك"></label><label>رقم الموبايل<input name="phone" required inputmode="tel" maxlength="25" placeholder="01xxxxxxxxx"></label><label>نوع الخدمة<select name="service_type"><option>تركيب تكييف</option><option>صيانة تكييف</option><option>استفسار عن منتج</option><option>أخرى</option></select></label><label>العنوان والتفاصيل<textarea name="details" rows="3" maxlength="1500" placeholder="المنطقة، نوع التكييف، وأي تفاصيل مهمة"></textarea></label><button class="btn primary full" type="submit">إرسال طلب الخدمة</button><p id="serviceStatus" class="form-status" role="status"></p></form></section>
-<section class="contact"><div><span class="eyebrow">تواصل معانا</span><h2>Grand Air في خدمتك</h2><p>مهندس محمود</p></div><a class="phone" href="tel:01097330033">☎ 01097330033</a><a class="wa" href="https://wa.me/201097330033" target="_blank" rel="noopener">تواصل عبر واتساب</a></section>
-</main><footer><b>GRAND AIR</b><span>تكييفات • تركيب • صيانة</span><small>© <span id="year"></span> Grand Air</small></footer>
-<div id="toast" class="toast" role="status"></div><script src="app.js" defer></script>
-</body></html>
+  <header class="top">
+    <a class="brand" href="#home">
+      <span class="mark">GA</span>
+      <span><b>GRAND AIR</b><small>راحة الجو تبدأ من هنا</small></span>
+    </a>
+    <button id="installBtn" class="install" hidden>تثبيت التطبيق</button>
+  </header>
+
+  <main id="home">
+    <section class="hero">
+      <div class="hero-copy">
+        <span class="eyebrow">تكييف • تركيب • صيانة</span>
+        <h1>خلّي الجو <em>مظبوط</em></h1>
+        <p>اختار التكييف المناسب ليك، واطلب التركيب أو الصيانة بسهولة من موبايلك.</p>
+        <div class="actions">
+          <a class="btn primary" href="#products">تصفح المنتجات</a>
+          <a class="btn light" href="#service">اطلب صيانة</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="sun"></div>
+        <div class="ac"><div class="ac-line"></div><div class="vents">≋ ≋ ≋ ≋ ≋</div></div>
+        <i class="wind w1"></i><i class="wind w2"></i><i class="wind w3"></i>
+      </div>
+    </section>
+
+    <section class="trust">
+      <div><b>01</b><span>اختيار سهل</span></div>
+      <div><b>02</b><span>طلب سريع</span></div>
+      <div><b>03</b><span>خدمة موثوقة</span></div>
+    </section>
+
+    <section class="section" id="products">
+      <div class="section-head">
+        <div><span class="eyebrow">كتالوج جراند إير</span><h2>التكييفات المتاحة</h2></div>
+        <button id="reload" class="text-btn">تحديث المنتجات ↻</button>
+      </div>
+      <p id="productNotice" class="notice">تصفح المنتجات واطلب السعر أو الشراء عبر واتساب.</p>
+      <div id="productsGrid" class="products">
+        <article class="empty">
+          <div class="empty-icon">❄</div>
+          <b>جاري تحميل المنتجات</b>
+          <p>لحظات من فضلك…</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="service" id="service">
+      <div>
+        <span class="eyebrow">إحنا معاك</span>
+        <h2>محتاج تركيب أو صيانة؟</h2>
+        <p>املأ البيانات لتجهيز طلبك والتواصل مع فريق Grand Air.</p>
+        <ul>
+          <li>تركيب تكييفات</li><li>صيانة وفحص</li><li>مساعدة في اختيار القدرة المناسبة</li>
+        </ul>
+      </div>
+      <form id="serviceForm">
+        <label>الاسم<input name="name" required maxlength="100" placeholder="اسم حضرتك"></label>
+        <label>رقم الموبايل<input name="phone" required inputmode="tel" maxlength="25" placeholder="01xxxxxxxxx"></label>
+        <label>نوع الخدمة
+          <select name="service_type">
+            <option>تركيب تكييف</option><option>صيانة تكييف</option>
+            <option>استفسار عن منتج</option><option>أخرى</option>
+          </select>
+        </label>
+        <label>العنوان والتفاصيل
+          <textarea name="details" rows="3" maxlength="1500" placeholder="المنطقة ونوع التكييف وأي تفاصيل مهمة"></textarea>
+        </label>
+        <button class="btn primary full" type="submit">إرسال طلب الخدمة</button>
+        <p id="serviceStatus" class="form-status" role="status"></p>
+      </form>
+    </section>
+
+    <section class="contact">
+      <div><span class="eyebrow">تواصل معانا</span><h2>Grand Air في خدمتك</h2><p>مهندس محمود</p></div>
+      <a class="phone" href="tel:01097330033">☎ 01097330033</a>
+      <a class="wa" href="https://wa.me/201097330033" target="_blank" rel="noopener">تواصل عبر واتساب</a>
+    </section>
+  </main>
+
+  <footer>
+    <b>GRAND AIR</b><span>تكييفات • تركيب • صيانة</span>
+    <small>© <span id="year"></span> Grand Air</small>
+  </footer>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script src="./app.js" defer></script>
+</body>
+  </html>
+  
