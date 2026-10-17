@@ -1,105 +1,82 @@
 
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#103b70">
-  <meta name="description" content="Grand Air — بيع وتركيب وصيانة التكييفات">
-  <link rel="manifest" href="./manifest.webmanifest">
-  <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png">
-  <link rel="apple-touch-icon" href="./icon-192.png">
-  <link rel="stylesheet" href="./style.css">
-  <title>Grand Air | تكييفات وصيانة</title>
-</head>
-<body>
-  <header class="top">
-    <a class="brand" href="#home">
-      <span class="mark">GA</span>
-      <span><b>GRAND AIR</b><small>راحة الجو تبدأ من هنا</small></span>
-    </a>
-    <button id="installBtn" class="install" hidden>تثبيت التطبيق</button>
-  </header>
+<section class="grandair-contact" dir="rtl">
+  <style>
+    .grandair-contact {
+      font-family: Arial, sans-serif;
+      padding: 32px 16px;
+      background: #fff;
+      color: #202938;
+      text-align: center;
+      border-radius: 16px;
+    }
+    .grandair-contact h2 {
+      color: #d92332;
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    .grandair-contact p { line-height: 1.8; }
+    .ga-phones, .ga-socials {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin: 20px auto;
+    }
+    .grandair-contact a {
+      display: inline-block;
+      padding: 12px 16px;
+      border-radius: 9px;
+      text-decoration: none;
+      font-weight: bold;
+      overflow-wrap: anywhere;
+    }
+    .ga-phone {
+      background: #e8f1ff;
+      color: #164b91;
+    }
+    .ga-wa {
+      background: #168b50;
+      color: white;
+    }
+    .ga-social {
+      background: #f0f3f8;
+      color: #26364d;
+    }
+    .ga-email {
+      color: #d92332;
+      direction: ltr;
+    }
+  </style>
 
-  <main id="home">
-    <section class="hero">
-      <div class="hero-copy">
-        <span class="eyebrow">تكييف • تركيب • صيانة</span>
-        <h1>خلّي الجو <em>مظبوط</em></h1>
-        <p>اختار التكييف المناسب ليك، واطلب التركيب أو الصيانة بسهولة من موبايلك.</p>
-        <div class="actions">
-          <a class="btn primary" href="#products">تصفح المنتجات</a>
-          <a class="btn light" href="#service">اطلب صيانة</a>
-        </div>
-      </div>
-      <div class="hero-art" aria-hidden="true">
-        <div class="sun"></div>
-        <div class="ac"><div class="ac-line"></div><div class="vents">≋ ≋ ≋ ≋ ≋</div></div>
-        <i class="wind w1"></i><i class="wind w2"></i><i class="wind w3"></i>
-      </div>
-    </section>
+  <h2>تواصل مع Grand Air</h2>
+  <p>معاك مهندس محمود — للتكييفات والتركيب والصيانة.</p>
 
-    <section class="trust">
-      <div><b>01</b><span>اختيار سهل</span></div>
-      <div><b>02</b><span>طلب سريع</span></div>
-      <div><b>03</b><span>خدمة موثوقة</span></div>
-    </section>
+  <h3>اتصل بنا</h3>
+  <div class="ga-phones">
+    <a class="ga-phone" href="tel:01097330033">01097330033</a>
+    <a class="ga-phone" href="tel:01154400252">01154400252</a>
+    <a class="ga-phone" href="tel:01500420280">01500420280</a>
+  </div>
 
-    <section class="section" id="products">
-      <div class="section-head">
-        <div><span class="eyebrow">كتالوج جراند إير</span><h2>التكييفات المتاحة</h2></div>
-        <button id="reload" class="text-btn">تحديث المنتجات ↻</button>
-      </div>
-      <p id="productNotice" class="notice">تصفح المنتجات واطلب السعر أو الشراء عبر واتساب.</p>
-      <div id="productsGrid" class="products">
-        <article class="empty">
-          <div class="empty-icon">❄</div>
-          <b>جاري تحميل المنتجات</b>
-          <p>لحظات من فضلك…</p>
-        </article>
-      </div>
-    </section>
+  <h3>واتساب</h3>
+  <div class="ga-phones">
+    <a class="ga-wa" href="https://wa.me/201097330033" target="_blank" rel="noopener">واتساب 01097330033</a>
+    <a class="ga-wa" href="https://wa.me/201154400252" target="_blank" rel="noopener">واتساب 01154400252</a>
+    <a class="ga-wa" href="https://wa.me/201500420280" target="_blank" rel="noopener">واتساب 01500420280</a>
+  </div>
 
-    <section class="service" id="service">
-      <div>
-        <span class="eyebrow">إحنا معاك</span>
-        <h2>محتاج تركيب أو صيانة؟</h2>
-        <p>املأ البيانات لتجهيز طلبك والتواصل مع فريق Grand Air.</p>
-        <ul>
-          <li>تركيب تكييفات</li><li>صيانة وفحص</li><li>مساعدة في اختيار القدرة المناسبة</li>
-        </ul>
-      </div>
-      <form id="serviceForm">
-        <label>الاسم<input name="name" required maxlength="100" placeholder="اسم حضرتك"></label>
-        <label>رقم الموبايل<input name="phone" required inputmode="tel" maxlength="25" placeholder="01xxxxxxxxx"></label>
-        <label>نوع الخدمة
-          <select name="service_type">
-            <option>تركيب تكييف</option><option>صيانة تكييف</option>
-            <option>استفسار عن منتج</option><option>أخرى</option>
-          </select>
-        </label>
-        <label>العنوان والتفاصيل
-          <textarea name="details" rows="3" maxlength="1500" placeholder="المنطقة ونوع التكييف وأي تفاصيل مهمة"></textarea>
-        </label>
-        <button class="btn primary full" type="submit">إرسال طلب الخدمة</button>
-        <p id="serviceStatus" class="form-status" role="status"></p>
-      </form>
-    </section>
+  <p>البريد الإلكتروني</p>
+  <a class="ga-email" href="mailto:grandair612@gmail.com">grandair612@gmail.com</a>
 
-    <section class="contact">
-      <div><span class="eyebrow">تواصل معانا</span><h2>Grand Air في خدمتك</h2><p>مهندس محمود</p></div>
-      <a class="phone" href="tel:01097330033">☎ 01097330033</a>
-      <a class="wa" href="https://wa.me/201097330033" target="_blank" rel="noopener">تواصل عبر واتساب</a>
-    </section>
-  </main>
-
-  <footer>
-    <b>GRAND AIR</b><span>تكييفات • تركيب • صيانة</span>
-    <small>© <span id="year"></span> Grand Air</small>
-  </footer>
-
-  <div id="toast" class="toast" role="status"></div>
-  <script src="./app.js" defer></script>
-</body>
-  </html>
-  
+  <h3>تابعنا على منصات التواصل</h3>
+  <div class="ga-socials">
+    <a class="ga-social" href="https://www.facebook.com/share/1DGchtnQ48/" target="_blank" rel="noopener">Facebook — الصفحة</a>
+    <a class="ga-social" href="https://www.facebook.com/profile.php?id=61594965327835&amp;mibextid=ZbWKwL" target="_blank" rel="noopener">Facebook — الحساب</a>
+    <a class="ga-social" href="https://www.instagram.com/reel/DehigpuNrIy/?mdxt=MW9lNzQ2OGI5a2o0bA==" target="_blank" rel="noopener">Instagram</a>
+    <a class="ga-social" href="https://youtube.com/shorts/izA888lLbUk?si=-tzDzq3tFwQI4i_d" target="_blank" rel="noopener">YouTube</a>
+    <a class="ga-social" href="https://www.tumblr.com/grandair612?source=share" target="_blank" rel="noopener">Tumblr</a>
+    <a class="ga-social" href="https://x.com/GrandAir612" target="_blank" rel="noopener">X</a>
+    <a class="ga-social" href="https://pin.it/L4hwL9Mxk" target="_blank" rel="noopener">Pinterest</a>
+    <a class="ga-social" href="https://www.linkedin.com/groups/40966104" target="_blank" rel="noopener">LinkedIn</a>
+  </div>
+</section>
