@@ -1,14 +1,106 @@
-/* Configure API_BASE after deploying the Cloudflare Worker, e.g. https://your-worker.workers.dev */
-const API_BASE = "";
-const BUSINESS_PHONE = "201097330033";
-const $ = (s) => document.querySelector(s);
-const money = (n) => new Intl.NumberFormat('ar-EG',{style:'currency',currency:'EGP',maximumFractionDigits:0}).format(Number(n)||0);
-function toast(message){const el=$('#toast');el.textContent=message;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3500)}
-function whatsappLink(text){return `https://wa.me/${BUSINESS_PHONE}?text=${encodeURIComponent(text)}`}
-function productCard(p){const name=String(p.name||'تكييف Grand Air');const desc=String(p.description||'');const img=String(p.image_url||'');const article=document.createElement('article');article.className='product';article.innerHTML=`<div class="product-img">${img.startsWith('https://')?`<img loading="lazy" alt="" src="${img.replace(/"/g,'&quot;')}">`:'<span class="product-symbol">❄</span>'}</div><div class="product-body"><h3></h3><p></p><div class="price"></div><a class="btn primary" target="_blank" rel="noopener">اطلب عبر واتساب</a></div>`;article.querySelector('h3').textContent=name;article.querySelector('p').textContent=desc||`${p.brand||'تكييف'}${p.category?' • '+p.category:''}`;article.querySelector('.price').textContent=Number(p.price)>0?money(p.price):'السعر عند الطلب';article.querySelector('a').href=whatsappLink(`مرحباً Grand Air، أريد الاستفسار عن: ${name}${Number(p.price)>0?' — السعر الظاهر '+money(p.price):''}.`);return article}
-async function loadProducts(){const grid=$('#productsGrid');$('#productNotice').textContent=API_BASE?'يتم عرض المنتجات المسجلة في كتالوج Grand Air.':'الكتالوج التجريبي جاهز للعرض؛ لعرض منتجاتك الحقيقية اربط الموقع بواجهة Cloudflare Worker.';grid.replaceChildren();if(API_BASE){try{const r=await fetch(`${API_BASE.replace(/\/$/,'')}/api/products`);if(!r.ok)throw new Error('API');const data=await r.json();const items=Array.isArray(data.products)?data.products:[];if(items.length){items.forEach(p=>grid.append(productCard(p)));return}}catch(e){$('#productNotice').textContent='تعذر تحميل المنتجات الآن. يمكنك التواصل مع Grand Air مباشرة عبر واتساب.'}}
-const samples=[{name:'تكييف سبليت',brand:'حسب الماركة',category:'تكييفات',description:'تواصل معنا لاختيار القدرة المناسبة للمساحة.',price:0},{name:'تركيب تكييف',category:'تركيب',description:'اطلب معاينة وتحديد تفاصيل التركيب.',price:0},{name:'صيانة تكييف',category:'صيانة',description:'تواصل معنا لتحديد نوع العطل والخدمة المطلوبة.',price:0}];samples.forEach(p=>grid.append(productCard(p)))}
-$('#reload').addEventListener('click',loadProducts);
-$('#serviceForm').addEventListener('submit',async(e)=>{e.preventDefault();const form=e.currentTarget;const data=Object.fromEntries(new FormData(form).entries());const status=$('#serviceStatus');status.textContent='';if(API_BASE){try{const r=await fetch(`${API_BASE.replace(/\/$/,'')}/api/service-requests`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(data)});if(!r.ok)throw new Error('submit');status.textContent='تم تسجيل طلب الخدمة بنجاح.';form.reset();return}catch(err){status.textContent='تعذر حفظ الطلب إلكترونياً؛ يمكنك إرساله عبر واتساب.'}}
-const msg=`طلب خدمة جديد — Grand Air\nالاسم: ${data.name}\nالموبايل: ${data.phone}\nالخدمة: ${data.service_type}\nالتفاصيل: ${data.details||'لا توجد تفاصيل إضافية'}`;window.open(whatsappLink(msg),'_blank','noopener');status.textContent='تم تجهيز الطلب لرساله عبر واتساب.'});
-let deferredPrompt=null;window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;$('#installBtn').hidden=false});$('#installBtn').addEventListener('click',async()=>{if(!deferredPrompt){toast('من قائمة المتصفح اختَر «إضافة إلى الشاشة الرئيسية».');return}deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null;$('#installBtn').hidden=true});window.addEventListener('appinstalled',()=>toast('تم تثبيت Grand Air على جهازك.'));if('serviceWorker'in navigator&&location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));$('#year').textContent=new Date().getFullYear();loadProducts();
+
+const $ = (selector) => document.querySelector(selector);
+
+document.addEventListener("DOMContentLoaded", () => {
+  const menuBtn = $("#menuBtn");
+  const sidebar = $("#sidebar");
+  const year = $("#year");
+  const requestForm = $("#requestForm");
+  const formMessage = $("#formMessage");
+
+  if (year) year.textContent = new Date().getFullYear();
+
+  // فتح وإغلاق قائمة الموبايل
+  if (menuBtn && sidebar) {
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+    });
+
+    sidebar.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        sidebar.classList.remove("open");
+      });
+    });
+  }
+
+  // اختيار منتج وإرساله إلى نموذج الطلب
+  document.querySelectorAll(".productBtn").forEach((button) => {
+    button.addEventListener("click", () => {
+      const product = button.dataset.product || "تكييف";
+      const type = $("#type");
+      const details = $("#details");
+
+      if (type) {
+        const matchingOption = [...type.options].find((option) =>
+          option.textContent.includes("شراء")
+        );
+        if (matchingOption) type.value = matchingOption.value;
+      }
+
+      if (details) details.value = `أرغب في الاستفسار عن: ${product}`;
+
+      $("#request")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    });
+  });
+
+  // إرسال الطلب إلى الخادم؛ لا نعرض نجاحًا إلا بعد تأكيده
+  if (requestForm) {
+    requestForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const submitButton = requestForm.querySelector(
+        'button[type="submit"], button:not([type])'
+      );
+
+      const formData = new FormData(requestForm);
+      const payload = Object.fromEntries(formData.entries());
+
+      const phone = String(payload.phone || "").replace(/\s+/g, "");
+      if (!payload.name || !phone) {
+        showMessage("من فضلك اكتب الاسم ورقم الهاتف.", false);
+        return;
+      }
+
+      if (submitButton) submitButton.disabled = true;
+      showMessage("جارٍ إرسال طلبك...", true);
+
+      try {
+        const response = await fetch("/api/requests", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json().catch(() => ({}));
+
+        if (!response.ok || result.ok !== true) {
+          throw new Error(result.error || "تعذر حفظ الطلب");
+        }
+
+        showMessage("تم تسجيل طلبك بنجاح، وسنتواصل معك قريبًا.", true);
+        requestForm.reset();
+      } catch (error) {
+        showMessage(
+          "لم يتم تأكيد تسجيل الطلب عبر الموقع. اتصل بنا أو راسلنا واتساب لإتمام طلبك.",
+          false
+        );
+      } finally {
+        if (submitButton) submitButton.disabled = false;
+      }
+    });
+  }
+
+  function showMessage(message, success) {
+    if (!formMessage) {
+      alert(message);
+      return;
+    }
+
+    formMessage.textContent = message;
+    formMessage.style.color = success ? "#16803d" : "#c62828";
+    formMessage.setAttribute("role", "status");
+  }
+});
