@@ -1,82 +1,198 @@
 
-<section class="grandair-contact" dir="rtl">
-  <style>
-    .grandair-contact {
-      font-family: Arial, sans-serif;
-      padding: 32px 16px;
-      background: #fff;
-      color: #202938;
-      text-align: center;
-      border-radius: 16px;
-    }
-    .grandair-contact h2 {
-      color: #d92332;
-      font-size: 28px;
-      margin-bottom: 8px;
-    }
-    .grandair-contact p { line-height: 1.8; }
-    .ga-phones, .ga-socials {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 10px;
-      margin: 20px auto;
-    }
-    .grandair-contact a {
-      display: inline-block;
-      padding: 12px 16px;
-      border-radius: 9px;
-      text-decoration: none;
-      font-weight: bold;
-      overflow-wrap: anywhere;
-    }
-    .ga-phone {
-      background: #e8f1ff;
-      color: #164b91;
-    }
-    .ga-wa {
-      background: #168b50;
-      color: white;
-    }
-    .ga-social {
-      background: #f0f3f8;
-      color: #26364d;
-    }
-    .ga-email {
-      color: #d92332;
-      direction: ltr;
-    }
-  </style>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d92332">
+  <meta name="description" content="Grand Air - التكييفات والتركيب والصيانة والمنزل الذكي">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Grand Air | جراند إير</title>
+</head>
+<body>
 
-  <h2>تواصل مع Grand Air</h2>
-  <p>معاك مهندس محمود — للتكييفات والتركيب والصيانة.</p>
+<header class="topbar">
+  <button id="menuBtn" aria-label="القائمة">☰</button>
+  <a href="#home" class="brand">
+    <span class="logo">GA</span>
+    <span><b>GRAND AIR</b><small>راحة تدوم طول السنة</small></span>
+  </a>
+  <a class="call" href="tel:01097330033">اتصل بنا</a>
+</header>
 
-  <h3>اتصل بنا</h3>
-  <div class="ga-phones">
-    <a class="ga-phone" href="tel:01097330033">01097330033</a>
-    <a class="ga-phone" href="tel:01154400252">01154400252</a>
-    <a class="ga-phone" href="tel:01500420280">01500420280</a>
-  </div>
+<div class="layout">
+<aside id="sidebar">
+  <h4>القائمة الرئيسية</h4>
+  <a href="#home">⌂ الرئيسية</a>
+  <a href="#products">❄ التكييفات والمنتجات</a>
+  <a href="#services">⚙ الخدمات والصيانة</a>
+  <a href="#offers">％ العروض</a>
+  <a href="#smart">⌘ المنزل الذكي والأتمتة</a>
+  <a href="#request">▤ طلب خدمة أو عرض سعر</a>
+  <a href="#contact">☎ تواصل معنا</a>
+  <a href="/admin">🔐 لوحة الإدارة</a>
+</aside>
 
-  <h3>واتساب</h3>
-  <div class="ga-phones">
-    <a class="ga-wa" href="https://wa.me/201097330033" target="_blank" rel="noopener">واتساب 01097330033</a>
-    <a class="ga-wa" href="https://wa.me/201154400252" target="_blank" rel="noopener">واتساب 01154400252</a>
-    <a class="ga-wa" href="https://wa.me/201500420280" target="_blank" rel="noopener">واتساب 01500420280</a>
-  </div>
+<main id="home">
+  <section class="hero">
+    <div>
+      <span class="eyebrow">GRAND AIR • COMFORT SOLUTIONS</span>
+      <h1>الراحة تبدأ من<br><em>اختيارك الصح.</em></h1>
+      <p>
+        حلول تكييف متكاملة من اختيار الجهاز إلى التركيب
+        والصيانة، بخدمة تليق ببيتك وشركتك.
+      </p>
+      <a class="btn primary" href="#products">اكتشف التكييفات</a>
+      <a class="btn outline" href="#request">اطلب عرض سعر</a>
+    </div>
+    <div class="hero-art">
+      <div class="air-unit">
+        <b>GRAND AIR</b>
+        <div class="vents"></div>
+      </div>
+      <span>COOLING • HEATING • SMART</span>
+    </div>
+  </section>
 
-  <p>البريد الإلكتروني</p>
-  <a class="ga-email" href="mailto:grandair612@gmail.com">grandair612@gmail.com</a>
+  <section class="stats">
+    <div><b>01</b><span>اختيار الجهاز</span></div>
+    <div><b>02</b><span>تركيب احترافي</span></div>
+    <div><b>03</b><span>دعم وصيانة</span></div>
+    <div><b>04</b><span>حلول ذكية</span></div>
+  </section>
 
-  <h3>تابعنا على منصات التواصل</h3>
-  <div class="ga-socials">
-    <a class="ga-social" href="https://www.facebook.com/share/1DGchtnQ48/" target="_blank" rel="noopener">Facebook — الصفحة</a>
-    <a class="ga-social" href="https://www.facebook.com/profile.php?id=61594965327835&amp;mibextid=ZbWKwL" target="_blank" rel="noopener">Facebook — الحساب</a>
-    <a class="ga-social" href="https://www.instagram.com/reel/DehigpuNrIy/?mdxt=MW9lNzQ2OGI5a2o0bA==" target="_blank" rel="noopener">Instagram</a>
-    <a class="ga-social" href="https://youtube.com/shorts/izA888lLbUk?si=-tzDzq3tFwQI4i_d" target="_blank" rel="noopener">YouTube</a>
-    <a class="ga-social" href="https://www.tumblr.com/grandair612?source=share" target="_blank" rel="noopener">Tumblr</a>
-    <a class="ga-social" href="https://x.com/GrandAir612" target="_blank" rel="noopener">X</a>
-    <a class="ga-social" href="https://pin.it/L4hwL9Mxk" target="_blank" rel="noopener">Pinterest</a>
-    <a class="ga-social" href="https://www.linkedin.com/groups/40966104" target="_blank" rel="noopener">LinkedIn</a>
-  </div>
-</section>
+  <section id="products" class="section">
+    <span class="eyebrow">OUR PRODUCTS</span>
+    <h2>التكييفات والمنتجات</h2>
+    <p>اختر الفئة المناسبة واطلب التفاصيل والأسعار.</p>
+
+    <div class="grid">
+      <article class="card">
+        <div class="symbol">❄</div>
+        <h3>تكييف سبليت</h3>
+        <p>حلول تبريد مناسبة للمنازل والغرف.</p>
+        <button class="productBtn" data-product="تكييف سبليت">اطلب التفاصيل ←</button>
+      </article>
+
+      <article class="card">
+        <div class="symbol blue">✦</div>
+        <h3>تكييف إنفرتر</h3>
+        <p>خيارات بكفاءة تشغيل تناسب احتياجك.</p>
+        <button class="productBtn" data-product="تكييف إنفرتر">اطلب التفاصيل ←</button>
+      </article>
+
+      <article class="card">
+        <div class="symbol">▦</div>
+        <h3>تكييفات تجارية</h3>
+        <p>حلول للمكاتب والمحلات والمشروعات.</p>
+        <button class="productBtn" data-product="تكييفات تجارية">اطلب التفاصيل ←</button>
+      </article>
+
+      <article class="card">
+        <div class="symbol blue">⚙</div>
+        <h3>قطع غيار وإكسسوارات</h3>
+        <p>مستلزمات حسب نوع الجهاز والموديل.</p>
+        <button class="productBtn" data-product="قطع غيار وإكسسوارات">اطلب التفاصيل ←</button>
+      </article>
+    </div>
+    <small>المنتجات المعروضة أمثلة مبدئية وليست مخزونًا فعليًا.</small>
+  </section>
+
+  <section id="services" class="section tinted">
+    <span class="eyebrow">OUR SERVICES</span>
+    <h2>خدماتنا</h2>
+    <div class="grid">
+      <article class="card">
+        <div class="symbol">01</div>
+        <h3>التركيب والتأسيس</h3>
+        <p>معاينة وتجهيز وتركيب التكييفات.</p>
+        <a href="#request">احجز معاينة ←</a>
+      </article>
+      <article class="card">
+        <div class="symbol blue">02</div>
+        <h3>الصيانة والتنظيف</h3>
+        <p>فحص الأجهزة وتنظيفها وتشخيص الأعطال.</p>
+        <a href="#request">اطلب صيانة ←</a>
+      </article>
+      <article class="card">
+        <div class="symbol">03</div>
+        <h3>المشروعات التجارية</h3>
+        <p>تجهيز حلول التكييف للمكاتب والشركات.</p>
+        <a href="#request">ناقش مشروعك ←</a>
+      </article>
+    </div>
+  </section>
+
+  <section id="offers" class="section">
+    <span class="eyebrow">SPECIAL OFFERS</span>
+    <h2>عروض جراند إير</h2>
+    <p>اسأل عن الأسعار والتوافر والعروض الحالية حسب الماركة والسعة.</p>
+    <a class="btn primary" href="#request">اطلب عرض سعر</a>
+  </section>
+
+  <section id="smart" class="section smart">
+    <span class="eyebrow">SMART HOME & AUTOMATION</span>
+    <h2>تحكم أذكى. <em>راحة أكثر.</em></h2>
+    <p>حلول المنزل الذكي والأتمتة حسب توافق الأجهزة واحتياجات المكان.</p>
+    <a class="btn primary" href="#request">ناقش الحل الذكي</a>
+  </section>
+
+  <section id="request" class="section tinted">
+    <span class="eyebrow">REQUEST A SERVICE</span>
+    <h2>اطلب خدمة أو عرض سعر</h2>
+    <p>اكتب بياناتك وسنتابع طلبك.</p>
+
+    <form id="requestForm">
+      <label>الاسم
+        <input name="name" required maxlength="100" placeholder="اسم العميل">
+      </label>
+
+      <label>رقم الهاتف
+        <input name="phone" required maxlength="30" inputmode="tel" placeholder="01xxxxxxxxx">
+      </label>
+
+      <label>نوع الطلب
+        <select name="type" required>
+          <option value="">اختر نوع الطلب</option>
+          <option>شراء تكييف</option>
+          <option>تركيب</option>
+          <option>صيانة</option>
+          <option>قطع غيار</option>
+          <option>مشروع تجاري</option>
+          <option>منزل ذكي وأتمتة</option>
+        </select>
+      </label>
+
+      <label>تفاصيل الطلب
+        <textarea name="details" rows="4" maxlength="1500"
+          placeholder="اكتب الماركة أو السعة أو وصف المشكلة"></textarea>
+      </label>
+
+      <button class="btn primary" type="submit">إرسال الطلب</button>
+      <p id="formMessage" role="status"></p>
+    </form>
+  </section>
+
+  <section id="contact" class="contact">
+    <span class="eyebrow">CONTACT GRAND AIR</span>
+    <h2>تواصل معنا</h2>
+    <p>اختر الرقم المناسب للاتصال أو واتساب.</p>
+    <div class="contacts">
+      <a href="tel:01154400252">01154400252</a>
+      <a href="tel:01097330033">01097330033</a>
+      <a href="tel:01500420280">01500420280</a>
+      <a href="https://wa.me/201097330033" target="_blank" rel="noreferrer">واتساب</a>
+    </div>
+  </section>
+
+  <footer>
+    <b>GRAND AIR</b>
+    <p>© <span id="year"></span> جميع الحقوق محفوظة.</p>
+  </footer>
+</main>
+</div>
+
+<script src="/app.js" defer></script>
+</body>
+</html>
