@@ -1,57 +1,68 @@
--- GRAND AIR D1 schema. Run once against the grand-air-db database.
+
 PRAGMA foreign_keys = ON;
 
 CREATE TABLE IF NOT EXISTS products (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   name TEXT NOT NULL,
-  description TEXT NOT NULL DEFAULT '',
-  brand TEXT NOT NULL DEFAULT '',
-  image_url TEXT NOT NULL DEFAULT '',
-  category TEXT NOT NULL DEFAULT '',
-  price REAL NOT NULL CHECK (price >= 0),
-  stock INTEGER NOT NULL DEFAULT 0 CHECK (stock >= 0),
-  active INTEGER NOT NULL DEFAULT 1 CHECK (active IN (0,1)),
-  created_at TEXT NOT NULL,
-  updated_at TEXT NOT NULL
+  brand TEXT DEFAULT '',
+  category TEXT NOT NULL DEFAULT 'air-conditioners',
+  description TEXT DEFAULT '',
+  price REAL DEFAULT NULL,
+  image_url TEXT DEFAULT '',
+  capacity TEXT DEFAULT '',
+  is_active INTEGER NOT NULL DEFAULT 1,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-
-CREATE INDEX IF NOT EXISTS idx_products_active_created ON products(active, created_at DESC);
-
-CREATE TABLE IF NOT EXISTS orders (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  order_number TEXT NOT NULL UNIQUE,
-  customer_name TEXT NOT NULL,
-  phone TEXT NOT NULL,
-  address TEXT NOT NULL,
-  notes TEXT NOT NULL DEFAULT '',
-  payment_method TEXT NOT NULL CHECK (payment_method = 'cash_on_delivery'),
-  items_json TEXT NOT NULL,
-  total REAL NOT NULL CHECK (total >= 0),
-  status TEXT NOT NULL DEFAULT 'new'
-    CHECK (status IN ('new','confirmed','preparing','shipped','completed','cancelled')),
-  created_at TEXT NOT NULL,
-  updated_at TEXT NOT NULL
-);
-
-CREATE INDEX IF NOT EXISTS idx_orders_created ON orders(created_at DESC);
-CREATE INDEX IF NOT EXISTS idx_orders_status ON orders(status);
 
 CREATE TABLE IF NOT EXISTS service_requests (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   customer_name TEXT NOT NULL,
   phone TEXT NOT NULL,
-  service_type TEXT NOT NULL,
-  address TEXT NOT NULL,
-  details TEXT NOT NULL DEFAULT '',
+  request_type TEXT NOT NULL DEFAULT 'general',
+  details TEXT DEFAULT '',
   status TEXT NOT NULL DEFAULT 'new',
-  created_at TEXT NOT NULL
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE INDEX IF NOT EXISTS idx_service_requests_created ON service_requests(created_at DESC);
-
-CREATE TABLE IF NOT EXISTS admin_sessions (
-  token_hash TEXT PRIMARY KEY,
-  created_at INTEGER NOT NULL,
-  expires_at INTEGER NOT NULL
+CREATE TABLE IF NOT EXISTS customers (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  name TEXT NOT NULL,
+  phone TEXT NOT NULL UNIQUE,
+  email TEXT DEFAULT '',
+  address TEXT DEFAULT '',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-CREATE INDEX IF NOT EXISTS idx_admin_sessions_expiry ON admin_sessions(expires_at);
+
+CREATE TABLE IF NOT EXISTS orders (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  customer_id INTEGER,
+  product_id INTEGER,
+  customer_name TEXT NOT NULL,
+  phone TEXT NOT NULL,
+  quantity INTEGER NOT NULL DEFAULT 1,
+  total REAL DEFAULT NULL,
+  notes TEXT DEFAULT '',
+  status TEXT NOT NULL DEFAULT 'new',
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (customer_id) REFERENCES customers(id),
+  FOREIGN KEY (product_id) REFERENCES products(id)
+);
+
+CREATE TABLE IF NOT EXISTS admins (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  username TEXT NOT NULL UNIQUE,
+  password_hash TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_requests_phone
+ON service_requests(phone);
+
+CREATE INDEX IF NOT EXISTS idx_requests_status
+ON service_requests(status);
+
+CREATE INDEX IF NOT EXISTS idx_orders_phone
+ON orders(phone);
+
+CREATE INDEX IF NOT EXISTS idx_products_category
+ON products(category);
